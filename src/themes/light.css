@@ -38,7 +38,7 @@
 
 .sidebar-section { padding: 16px 12px; position: relative; }
 .sidebar-label { font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 700; color: #9da5b4; letter-spacing: 3px; text-transform: uppercase; padding: 0 8px; margin-bottom: 8px; }
-.sidebar-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 2px; cursor: pointer; border: 1px solid transparent; margin-bottom: 2px; transition: all 0.15s; position: relative; overflow: hidden; }
+.sidebar-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 2px; cursor: pointer; border: 1px solid transparent; margin-bottom: 2px; transition: all 0.15s; position: relative; overflow: visible; }
 .sidebar-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(90deg, rgba(0,102,204,0.1), transparent); transition: width 0.2s; }
 .sidebar-item:hover::before, .sidebar-item.active::before { width: 100%; }
 .sidebar-item:hover, .sidebar-item.active { border-color: #e5e5e5; background: #f0f0f0; }

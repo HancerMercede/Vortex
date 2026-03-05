@@ -48,6 +48,7 @@
 - Fixed continuous border lines between panels (not cut)
 - Unified tab styling between request and response panels
 - Added Developer Guide (DEVELOPER_GUIDE.md)
+- Fixed Electron app not loading - added `base: '/'` to vite.config.ts
 
 ---
 
