@@ -76,6 +76,7 @@ export interface Settings {
   defaultHeaders: Header[];
   theme: string;
   fontSize: number;
+  responsePanelPosition: 'side' | 'bottom';
 }
 
 export interface CollectionRequest {

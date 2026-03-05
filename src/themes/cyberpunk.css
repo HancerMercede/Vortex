@@ -106,11 +106,20 @@
   flex: 1; overflow: hidden; position: relative; z-index: 1;
 }
 
-.sidebar { background: #060c12; border-right: 1px solid #0d2d3d; overflow-y: auto; height: 100%; }
-.sidebar::-webkit-scrollbar { width: 3px; }
-.sidebar::-webkit-scrollbar-thumb { background: #00a8b0; }
+.sidebar-container { overflow: hidden; display: flex; }
+.sidebar { background: #060c12; border-right: 1px solid #0d2d3d; height: 100%; display: flex; flex-direction: column; }
+.sidebar::-webkit-scrollbar { display: none; }
 
-.sidebar-section { padding: 16px 12px; }
+.sidebar-top { display: flex; gap: 8px; padding: 8px 12px; border-bottom: 1px solid #0d2d3d; position: sticky; top: 0; z-index: 10; background: #060c12; }
+.sidebar-search-input { flex: 1; background: #0d1e2e; border: 1px solid #0d2d3d; color: #c8e8f0; padding: 6px 10px; font-size: 12px; border-radius: 2px; font-family: 'Share Tech Mono', monospace; }
+.sidebar-search-input:focus { border-color: #00a8b0; outline: none; }
+.sidebar-search-input::placeholder { color: #2a4a5a; }
+.sidebar-gear { cursor: pointer; color: #5a8a9a; font-size: 14px; padding: 4px; }
+.sidebar-gear:hover { color: #00f5ff; }
+.sidebar-content { overflow-y: auto; height: calc(100% - 45px); overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none; }
+.sidebar-content::-webkit-scrollbar { display: none; }
+
+.sidebar-section { padding: 16px 12px; position: relative; }
 
 .sidebar-label {
   font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 700;
@@ -245,8 +254,18 @@
 @keyframes loadBar { 0%{background-position:-100% 0} 100%{background-position:200% 0} }
 
 .content { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+.content-horizontal { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+.content-vertical { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
 
-.panel { display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #0d2d3d; }
+.panel-resizer {
+  background: #0d2d3d;
+  cursor: row-resize;
+  flex-shrink: 0;
+}
+.panel-resizer:hover { background: #00a8b0; }
+
+.panel { display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #0d2d3d; border-bottom: 1px solid #0d2d3d; }
+.response-panel { border-left: 1px solid #0d2d3d; border-bottom: 1px solid #0d2d3d; }
 
 .panel-tabs {
   display: flex; border-bottom: 1px solid #0d2d3d;
@@ -288,6 +307,15 @@
 }
 
 .kv-delete:hover { border-color: #ff006e; color: #ff006e; }
+
+.layout-toggle { display: flex; gap: 8px; margin-top: 8px; }
+.layout-btn {
+  flex: 1; padding: 8px 12px; background: #0d1e2e; border: 1px solid #0d2d3d;
+  color: #5a8a9a; font-size: 11px; cursor: pointer; border-radius: 2px;
+  transition: all 0.2s; font-family: 'Share Tech Mono', monospace;
+}
+.layout-btn:hover { border-color: #00a8b0; color: #00f5ff; }
+.layout-btn.active { background: #0d2d3d; border-color: #00a8b0; color: #00f5ff; }
 
 .add-row-btn {
   background: transparent; border: 1px dashed #1a4a5a; color: #2a4a5a;
@@ -433,6 +461,10 @@ select option[value="DELETE"] { color: #ff0040; }
 .proxy-fields { display: flex; gap: 8px; margin-top: 8px; }
 .proxy-fields .kv-input.port { width: 80px; flex: none; }
 .import-export { display: flex; gap: 8px; }
+.import-export-menu { position: absolute; top: 40px; left: 0; background: #060c12; border: 1px solid #0d2d3d; padding: 8px; border-radius: 2px; z-index: 100; width: 100px; }
+.import-export-option { padding: 6px 10px; cursor: pointer; color: #5a8a9a; font-size: 11px; border-radius: 2px; }
+.import-export-option:hover { background: #0d2d3d; color: #00f5ff; }
+
 .font-size-value { font-size: 12px; color: #2a4a5a; }
 
 .env-selector { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -483,6 +515,8 @@ select option[value="DELETE"] { color: #ff0040; }
 .sidebar-divider { height: 1px; background: #0d2d3d; margin: 8px 0; }
 .history-group { margin-bottom: 8px; }
 .history-date-label { font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 600; color: #2a4a5a; letter-spacing: 2px; padding: 4px 8px; text-transform: uppercase; }
+.history-delete { background: none; border: none; color: #ff0040; font-size: 14px; cursor: pointer; padding: 4px; margin-left: auto; opacity: 0; position: relative; z-index: 10; }
+.sidebar-item:hover .history-delete { opacity: 1; }
 
 .sidebar-add-btn { cursor: pointer; color: #00f5ff; font-size: 14px; padding: 0 4px; }
 .sidebar-add-btn:hover { text-shadow: 0 0 8px #00f5ff; }

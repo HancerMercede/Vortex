@@ -1,4 +1,4 @@
-import { useSettingsStore } from '../store';
+import { useSettingsStore } from '../../application/stores/settingsStore';
 
 export function SettingsPanel() {
   const { settings, setSettings, closePanels } = useSettingsStore();
@@ -69,6 +69,24 @@ export function SettingsPanel() {
             />
             VERIFY SSL CERTIFICATES
           </label>
+        </div>
+
+        <div className="settings-section">
+          <label className="settings-label">RESPONSE PANEL POSITION</label>
+          <div className="layout-toggle">
+            <button
+              className={`layout-btn ${settings.responsePanelPosition === 'side' ? 'active' : ''}`}
+              onClick={() => updateSetting('responsePanelPosition', 'side')}
+            >
+              ⬌ Side by Side
+            </button>
+            <button
+              className={`layout-btn ${settings.responsePanelPosition === 'bottom' ? 'active' : ''}`}
+              onClick={() => updateSetting('responsePanelPosition', 'bottom')}
+            >
+              ⬍ Bottom
+            </button>
+          </div>
         </div>
 
         <div className="settings-section">

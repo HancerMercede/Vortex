@@ -28,6 +28,7 @@ export const DEFAULT_SETTINGS: Settings = {
   defaultHeaders: [],
   theme: 'cyberpunk',
   fontSize: 13,
+  responsePanelPosition: 'side',
 };
 
 export const METHOD_COLORS: Record<HttpMethod, { color: string; bg: string }> = {

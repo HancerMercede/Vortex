@@ -47,6 +47,8 @@ interface RequestState {
   deleteRequestFromCollection: (collectionId: string, requestId: string) => void;
   updateRequestInCollection: (collectionId: string, requestId: string, request: Partial<CollectionRequest>) => void;
   loadRequestFromCollection: (collectionId: string, requestId: string) => void;
+  exportCollections: () => void;
+  importCollections: (json: string) => void;
 }
 
 const defaultAuthData: AuthData = {
@@ -206,5 +208,31 @@ export const useRequestStore = create<RequestState>((set, get) => ({
       response: null,
       error: null,
     });
+  },
+
+  exportCollections: () => {
+    const state = get();
+    const data = JSON.stringify(state.collections, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'vortex-collections.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  },
+
+  importCollections: (json) => {
+    try {
+      const imported = JSON.parse(json);
+      if (Array.isArray(imported)) {
+        const current = get().collections;
+        const merged = [...current, ...imported.map((c: Collection) => ({ ...c, id: Date.now().toString() + Math.random() }))];
+        set({ collections: merged });
+        saveToStorage(STORAGE_KEYS.COLLECTIONS, merged);
+      }
+    } catch (e) {
+      console.error('Failed to import collections:', e);
+    }
   },
 }));

@@ -3,6 +3,7 @@ const STORAGE_KEYS = {
   ENVIRONMENTS: 'vortex_environments',
   HISTORY: 'vortex_history',
   COLLECTIONS: 'vortex_collections',
+  SIDEBAR_WIDTH: 'vortex_sidebar_width',
 } as const;
 
 export function saveToStorage<T>(key: string, data: T): void {

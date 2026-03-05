@@ -122,16 +122,16 @@ export function ResponsePanel() {
 
   return (
     <div className="response-panel">
-      <div className="response-header">
+      <div className="panel-tabs">
         <div className="tab-group">
           {(['BODY', 'HEADERS', 'TIMELINE'] as ResponseTab[]).map((tab) => (
-            <button
+            <div
               key={tab}
-              className={`tab${responseTab === tab ? ' active' : ''}`}
+              className={`panel-tab${responseTab === tab ? ' active' : ''}`}
               onClick={() => setResponseTab(tab)}
             >
               {tab}
-            </button>
+            </div>
           ))}
         </div>
         {response && (

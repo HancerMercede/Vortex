@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import cyberpunkTheme from './themes/cyberpunk.css?raw';
 import oneDarkTheme from './themes/one-dark.css?raw';
 import lightTheme from './themes/light.css?raw';
@@ -27,6 +28,41 @@ const THEMES: Record<string, string> = {
 export default function Vortex() {
   const { settings, showEnvPanel, showSettingsPanel, closePanels } = useSettingsStore();
   const { requestTab } = useRequestStore();
+  const isVerticalLayout = settings.responsePanelPosition === 'bottom';
+  const [panelHeight, setPanelHeight] = useState(50);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const isResizing = useRef(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing.current || !panelRef.current) return;
+      const container = panelRef.current.parentElement;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const percentage = ((e.clientY - rect.top) / rect.height) * 100;
+      setPanelHeight(Math.min(Math.max(percentage, 20), 80));
+    };
+
+    const handleMouseUp = () => {
+      isResizing.current = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
+
+  const handleResizeStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    isResizing.current = true;
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+  };
   
   const currentTheme = THEMES[settings.theme] || THEMES.cyberpunk;
 
@@ -58,11 +94,19 @@ export default function Vortex() {
             <UrlBar />
             <div className="loading-bar" />
             
-            <div className="content">
+            <div 
+              ref={panelRef}
+              className={`content ${isVerticalLayout ? 'content-vertical' : 'content-horizontal'}`}
+              style={isVerticalLayout ? { gridTemplateRows: `${panelHeight}% 6px 1fr` } : undefined}
+            >
               <div className="panel">
                 <TabBar />
                 {renderRequestTab()}
               </div>
+              
+              {isVerticalLayout && (
+                <div className="panel-resizer" onMouseDown={handleResizeStart} />
+              )}
               
               <ResponsePanel />
             </div>
