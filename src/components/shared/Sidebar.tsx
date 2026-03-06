@@ -83,7 +83,7 @@ export const Sidebar: FC = () => {
       if (date.toDateString() === today.toDateString()) return "Today";
       if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
       return date.toLocaleDateString("en-US", {
-        month: "long day",
+        month: "long",
         day: "numeric",
         year:
           date.getFullYear() !== today.getFullYear() ? "numeric" : undefined,
